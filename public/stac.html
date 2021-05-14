@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>stacox</title>
+  </head>
+
+  <body>
+    <textarea id="txt"></textarea>
+    <br />
+    <button id="send">sendd</button>
+    <br />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+    <script>
+      const socket = io.connect(
+        /// URL/token=token_from_local_storage
+        `http://localhost:8080/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODQ0YjA2ZWYxODRkMTIwMGY3Zjc1ZCIsImlhdCI6MTYwNDY2OTU4OSwiZXhwIjoxNjA0NzU1OTg5fQ.HpQ_V88GXjqtK7BvGGUjawkU3XoeekFCvGxGKtfzpvU`
+      );
+      socket.on("connect", () => {
+        console.log("connected to the server");
+
+        socket.on("newMessage", (message) => {
+          const m = document.createElement("p");
+          m.style = "color: blue";
+          m.innerHTML = message;
+          document.body.append(m);
+          console.log(message);
+        });
+
+        send.onclick = function () {
+          socket.emit("message", "5fa552cffb36183b7c420945", txt.value);
+          document.body.append(txt.value);
+          console.log(txt.value);
+        };
+      });
+    </script>
+  </body>
+</html>

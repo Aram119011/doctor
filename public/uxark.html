@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>uxark</title>
+  </head>
+
+  <body>
+    <textarea id="txt"></textarea>
+    <br />
+    <button id="send">sendd</button>
+    <br />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+    <script>
+      const socket = io.connect(
+        `http://localhost:8080/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTU1MmNmZmIzNjE4M2I3YzQyMDk0NSIsImlhdCI6MTYwNDY3MDE4NSwiZXhwIjoxNjA0NzU2NTg1fQ.oNNxCaz7ezIDQTGy7eGIMr1gH1owA3OQZgrYfpceDL4`
+      );
+      socket.on("connect", () => {
+        console.log("connected to the server");
+
+        socket.on("newMessage", (message) => {
+          const m = document.createElement("p");
+          m.style = "color: blue";
+          m.innerHTML = message;
+          document.body.append(m);
+          console.log(message);
+        });
+
+        send.onclick = function () {
+          socket.emit("message", "5f844b06ef184d1200f7f75d", txt.value);
+          console.log(txt.value);
+          document.body.append(txt.value);
+        };
+      });
+    </script>
+  </body>
+</html>
